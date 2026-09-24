@@ -9,7 +9,7 @@ import 'package:eventora/widgets/price_breakdown.dart';
 import 'package:eventora/routes/app_router.dart';
 
 class PaymentPage extends StatefulWidget {
-  const PaymentPage({Key? key}) : super(key: key);
+  const PaymentPage({super.key});
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -48,8 +48,8 @@ class _PaymentPageState extends State<PaymentPage> {
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     Expanded(
                       child: EventoraTextField(
                         label: 'Expiry Date',
@@ -79,8 +79,8 @@ class _PaymentPageState extends State<PaymentPage> {
                   hint: '123 Main St',
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     Expanded(
                       child: EventoraTextField(
                         label: 'City',
@@ -104,14 +104,17 @@ class _PaymentPageState extends State<PaymentPage> {
                   hint: 'Enter code',
                   suffixIcon: TextButton(
                     onPressed: () {},
-                    child: Text('Apply', style: AppTypography.labelMD.copyWith(color: AppColors.primary)),
+                    child: Text('Apply',
+                        style: AppTypography.labelMD
+                            .copyWith(color: AppColors.primary)),
                   ),
                 ),
                 const Divider(height: 32),
                 Card(
                   elevation: 0,
                   color: AppColors.surfaceContainerLowest,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
@@ -119,10 +122,20 @@ class _PaymentPageState extends State<PaymentPage> {
                       children: [
                         Text('Order Summary', style: AppTypography.labelLG),
                         const SizedBox(height: 8),
-                        Text('Premium Wedding Package', style: AppTypography.bodyMD),
-                        Text('Oct 24, 2023', style: AppTypography.bodySM.copyWith(color: AppColors.mutedText)),
+                        Text('Premium Wedding Package',
+                            style: AppTypography.bodyMD),
+                        Text('Oct 24, 2023',
+                            style: AppTypography.bodySM
+                                .copyWith(color: AppColors.mutedText)),
                         const SizedBox(height: 16),
-                        const PriceBreakdown(subtotal: 500, tax: 50, total: 550, isCompact: true),
+                        const PriceBreakdown(
+                          items: [
+                            PriceItem(
+                                name: 'Premium Wedding Package', price: 500),
+                          ],
+                          tax: 50,
+                          total: 550,
+                        ),
                       ],
                     ),
                   ),

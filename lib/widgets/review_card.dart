@@ -12,13 +12,13 @@ class ReviewCard extends StatelessWidget {
   final DateTime date;
 
   const ReviewCard({
-    Key? key,
+    super.key,
     required this.userName,
     this.userImageUrl,
     required this.rating,
     required this.comment,
     required this.date,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

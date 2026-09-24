@@ -7,7 +7,7 @@ import 'package:eventora/providers/bookings_provider.dart';
 import 'package:provider/provider.dart';
 
 class MyBookingsPage extends StatelessWidget {
-  const MyBookingsPage({Key? key}) : super(key: key);
+  const MyBookingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,24 +46,41 @@ class MyBookingsPage extends StatelessWidget {
     final bookings = bookingsProvider.getBookingsByStatus(status);
 
     if (bookingsProvider.isLoading) {
-      return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+      return const Center(
+          child: CircularProgressIndicator(color: AppColors.primary));
     }
 
     if (bookings.isEmpty) {
       return Center(
-        child: Text('No $status bookings found.', style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
+        child: Text('No $status bookings found.',
+            style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
       );
     }
 
     return RefreshIndicator(
-      onRefresh: () => Future.delayed(const Duration(seconds: 1)), // Placeholder refresh
+      onRefresh: () =>
+          Future.delayed(const Duration(seconds: 1)), // Placeholder refresh
       color: AppColors.primary,
       child: ListView.separated(
         padding: const EdgeInsets.all(AppSpacing.marginMobile),
         itemCount: bookings.length,
         separatorBuilder: (context, index) => const SizedBox(height: 16),
         itemBuilder: (context, index) {
-          return BookingCard(booking: bookings[index]);
+          final booking = bookings[index];
+          return BookingCard(
+            serviceName: booking.serviceName,
+            serviceImageUrl: booking.serviceImageUrl,
+            bookingDate: booking.bookingDate,
+            status: BookingStatus.values.firstWhere(
+              (status) => status.name == booking.status.name,
+              orElse: () => BookingStatus.pending,
+            ),
+            total: booking.total,
+            bookingId: booking.id,
+            onTap: () {
+              // browse booking details later
+            },
+          );
         },
       ),
     );

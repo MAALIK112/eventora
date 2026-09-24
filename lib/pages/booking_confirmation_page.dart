@@ -9,10 +9,11 @@ import 'package:eventora/widgets/payment_method_tile.dart';
 import 'package:eventora/routes/app_router.dart';
 
 class BookingConfirmationPage extends StatefulWidget {
-  const BookingConfirmationPage({Key? key}) : super(key: key);
+  const BookingConfirmationPage({super.key});
 
   @override
-  State<BookingConfirmationPage> createState() => _BookingConfirmationPageState();
+  State<BookingConfirmationPage> createState() =>
+      _BookingConfirmationPageState();
 }
 
 class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
@@ -43,7 +44,9 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
             ),
             const SizedBox(height: 16),
             Text('Premium Wedding Package', style: AppTypography.headlineMD),
-            Text('Oct 24, 2023', style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
+            Text('Oct 24, 2023',
+                style:
+                    AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
             const Divider(height: 32),
             Text('Selected Services', style: AppTypography.headlineSM),
             const SizedBox(height: 16),
@@ -69,25 +72,31 @@ class _BookingConfirmationPageState extends State<BookingConfirmationPage> {
               ],
             ),
             const Divider(height: 32),
-            PriceBreakdown(subtotal: subtotal, tax: tax, total: total),
+            PriceBreakdown(
+              items: const [
+                PriceItem(name: 'Wedding Package', price: 500.0),
+              ],
+              tax: tax,
+              total: total,
+            ),
             const Divider(height: 32),
             Text('Payment Method', style: AppTypography.headlineSM),
             const SizedBox(height: 16),
             PaymentMethodTile(
+              name: 'Credit/Debit Card',
               icon: Icons.credit_card,
-              title: 'Credit/Debit Card',
               isSelected: selectedPaymentMethod == 'Card',
               onTap: () => setState(() => selectedPaymentMethod = 'Card'),
             ),
             PaymentMethodTile(
+              name: 'PayPal',
               icon: Icons.account_balance_wallet,
-              title: 'PayPal',
               isSelected: selectedPaymentMethod == 'PayPal',
               onTap: () => setState(() => selectedPaymentMethod = 'PayPal'),
             ),
             PaymentMethodTile(
+              name: 'Cash on Delivery',
               icon: Icons.money,
-              title: 'Cash on Delivery',
               isSelected: selectedPaymentMethod == 'Cash',
               onTap: () => setState(() => selectedPaymentMethod = 'Cash'),
             ),

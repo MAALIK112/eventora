@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:eventora/models/booking_model.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
@@ -11,7 +12,7 @@ import 'package:provider/provider.dart';
 class BookingDetailPage extends StatelessWidget {
   final String bookingId;
 
-  const BookingDetailPage({Key? key, required this.bookingId}) : super(key: key);
+  const BookingDetailPage({super.key, required this.bookingId});
 
   @override
   Widget build(BuildContext context) {
@@ -19,23 +20,22 @@ class BookingDetailPage extends StatelessWidget {
     final booking = bookingsProvider.getBookingById(bookingId);
 
     if (booking == null) {
-      return Scaffold(
-        appBar: const CustomAppBar(title: 'Booking Details'),
-        body: const Center(child: Text('Booking not found')),
+      return const Scaffold(
+        appBar: CustomAppBar(title: 'Booking Details'),
+        body: Center(child: Text('Booking not found')),
       );
     }
 
     Color statusColor;
-    switch (booking.status.toLowerCase()) {
+    switch (booking.status.name) {
       case 'upcoming':
         statusColor = AppColors.primary;
         break;
-      case 'past':
       case 'completed':
         statusColor = AppColors.successGreen;
         break;
       case 'cancelled':
-        statusColor = AppColors.errorRed;
+        statusColor = AppColors.error;
         break;
       default:
         statusColor = AppColors.mutedText;
@@ -55,7 +55,7 @@ class BookingDetailPage extends StatelessWidget {
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(16),
                 image: DecorationImage(
-                  image: NetworkImage(booking.service.imageUrl),
+                  image: NetworkImage(booking.serviceImageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -69,27 +69,35 @@ class BookingDetailPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(booking.service.name, style: AppTypography.headlineMD),
+                      Text(booking.serviceName,
+                          style: AppTypography.headlineMD),
                       const SizedBox(height: 4),
-                      Text(booking.date, style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
+                      Text(
+                        '${booking.bookingDate.day}/${booking.bookingDate.month}/${booking.bookingDate.year}',
+                        style: AppTypography.bodyMD
+                            .copyWith(color: AppColors.mutedText),
+                      ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
-                    booking.status.toUpperCase(),
+                    booking.status.name.toUpperCase(),
                     style: AppTypography.labelSM.copyWith(color: statusColor),
                   ),
                 ),
               ],
             ),
             const Divider(height: 32),
-            Text('Booking ID', style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
+            Text('Booking ID',
+                style:
+                    AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
             Text(booking.id, style: AppTypography.labelLG),
             const Divider(height: 32),
             Text('Booked Items', style: AppTypography.headlineSM),
@@ -97,15 +105,20 @@ class BookingDetailPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${booking.service.name} x1', style: AppTypography.bodyLG),
-                Text('\$${booking.totalPrice.toStringAsFixed(2)}', style: AppTypography.labelMD),
+                Text('${booking.serviceName} x1', style: AppTypography.bodyLG),
+                Text('\$${booking.total.toStringAsFixed(2)}',
+                    style: AppTypography.labelMD),
               ],
             ),
             const Divider(height: 32),
             PriceBreakdown(
-              subtotal: booking.totalPrice - (booking.totalPrice * 0.1),
-              tax: booking.totalPrice * 0.1,
-              total: booking.totalPrice,
+              items: [
+                PriceItem(
+                    name: booking.serviceName,
+                    price: booking.total - (booking.total * 0.1)),
+              ],
+              tax: booking.total * 0.1,
+              total: booking.total,
             ),
             const Divider(height: 32),
             Text('Payment Method', style: AppTypography.headlineSM),
@@ -132,8 +145,8 @@ class BookingDetailPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildActionButtons(String status) {
-    if (status.toLowerCase() == 'upcoming') {
+  List<Widget> _buildActionButtons(BookingStatus status) {
+    if (status == BookingStatus.upcoming) {
       return [
         EventoraButton(
           text: 'Reschedule',
@@ -150,7 +163,7 @@ class BookingDetailPage extends StatelessWidget {
           onPressed: () {},
         ),
       ];
-    } else if (status.toLowerCase() == 'past' || status.toLowerCase() == 'completed') {
+    } else if (status == BookingStatus.completed) {
       return [
         EventoraButton(
           text: 'Leave Review',

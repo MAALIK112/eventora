@@ -18,7 +18,7 @@ class EventoraButton extends StatefulWidget {
   final double? height;
 
   const EventoraButton({
-    Key? key,
+    super.key,
     this.label,
     this.text,
     this.onPressed,
@@ -31,7 +31,7 @@ class EventoraButton extends StatefulWidget {
     this.backgroundColor,
     this.textColor,
     this.height = 52.0,
-  }) : super(key: key);
+  });
 
   @override
   State<EventoraButton> createState() => _EventoraButtonState();

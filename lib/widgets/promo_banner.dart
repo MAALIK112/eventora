@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
-import 'package:eventora/styles/app_shadows.dart';
 
 class PromoBanner extends StatelessWidget {
   final String title;
@@ -12,12 +11,12 @@ class PromoBanner extends StatelessWidget {
   final VoidCallback? onTap;
 
   const PromoBanner({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     this.imageUrl,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,23 +51,27 @@ class PromoBanner extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: AppTypography.headlineMD.copyWith(color: Colors.white),
+                          style: AppTypography.headlineMD
+                              .copyWith(color: Colors.white),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           subtitle,
-                          style: AppTypography.bodySM.copyWith(color: Colors.white70),
+                          style: AppTypography.bodySM
+                              .copyWith(color: Colors.white70),
                         ),
                         const SizedBox(height: 12),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
                           decoration: BoxDecoration(
                             color: AppColors.amberAccent,
                             borderRadius: BorderRadius.circular(9999),
                           ),
                           child: Text(
                             'Book Now',
-                            style: AppTypography.labelMD.copyWith(color: Colors.white),
+                            style: AppTypography.labelMD
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                       ],

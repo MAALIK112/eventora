@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 class ServiceDetailPage extends StatelessWidget {
   final String serviceId;
 
-  const ServiceDetailPage({Key? key, required this.serviceId}) : super(key: key);
+  const ServiceDetailPage({super.key, required this.serviceId});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,8 @@ class ServiceDetailPage extends StatelessWidget {
               background: Image.network(
                 service.imageUrl,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey),
+                errorBuilder: (context, error, stackTrace) =>
+                    Container(color: Colors.grey),
               ),
             ),
             leading: IconButton(
@@ -57,14 +58,16 @@ class ServiceDetailPage extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Text(
-                          service.category,
-                          style: AppTypography.labelSM.copyWith(color: AppColors.primary),
+                          service.category.name,
+                          style: AppTypography.labelSM
+                              .copyWith(color: AppColors.primary),
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -72,7 +75,9 @@ class ServiceDetailPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Text('\$${service.price.toStringAsFixed(2)}', style: AppTypography.headlineMD.copyWith(color: AppColors.primary)),
+                  Text('\$${service.price.toStringAsFixed(2)}',
+                      style: AppTypography.headlineMD
+                          .copyWith(color: AppColors.primary)),
                   const Divider(height: 32),
                 ],
               ),
@@ -97,17 +102,20 @@ class ServiceDetailPage extends StatelessWidget {
                     child: TabBarView(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(AppSpacing.marginMobile),
-                          child: Text(service.description, style: AppTypography.bodyLG),
+                          padding:
+                              const EdgeInsets.all(AppSpacing.marginMobile),
+                          child: Text(service.description,
+                              style: AppTypography.bodyLG),
                         ),
                         ListView.builder(
-                          padding: const EdgeInsets.all(AppSpacing.marginMobile),
-                          itemCount: 3,
+                          padding:
+                              const EdgeInsets.all(AppSpacing.marginMobile),
+                          itemCount: 1,
                           itemBuilder: (context, index) => ReviewCard(
-                            reviewerName: 'John Doe',
+                            userName: 'John Doe',
                             rating: 5,
                             comment: 'Great service! Highly recommended.',
-                            date: '2023-10-01',
+                            date: DateTime(2023, 10, 1),
                           ),
                         ),
                         const Padding(
@@ -129,7 +137,8 @@ class ServiceDetailPage extends StatelessWidget {
           child: EventoraButton(
             text: 'Book Now',
             isFullWidth: true,
-            onPressed: () => Navigator.pushNamed(context, AppRouter.bookingConfirmation),
+            onPressed: () =>
+                Navigator.pushNamed(context, AppRouter.bookingConfirmation),
           ),
         ),
       ),

@@ -18,7 +18,7 @@ class EventoraTextField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
 
   const EventoraTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.label,
     this.hint,
@@ -32,7 +32,7 @@ class EventoraTextField extends StatelessWidget {
     this.maxLines = 1,
     this.onChanged,
     this.validator,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

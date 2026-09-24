@@ -11,7 +11,7 @@ import 'package:eventora/providers/services_provider.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +32,20 @@ class HomePage extends StatelessWidget {
                   Text('Hello, User', style: AppTypography.headlineLG),
                   const CircleAvatar(
                     backgroundColor: AppColors.primary,
-                    child: Icon(Icons.person, color: AppColors.surfaceContainerLowest),
+                    child: Icon(Icons.person,
+                        color: AppColors.surfaceContainerLowest),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-              const EventoraSearchBar(),
+              EventoraSearchBar(
+                onChanged: (value) {},
+              ),
               const SizedBox(height: 24),
               const PromoBanner(
                 title: 'Plan Your Perfect Event',
-                subtitle: 'Discover premium services for your special occasions',
+                subtitle:
+                    'Discover premium services for your special occasions',
               ),
               const SizedBox(height: 24),
               Text('Our Services', style: AppTypography.headlineMD),
@@ -56,32 +60,43 @@ class HomePage extends StatelessWidget {
                   ServiceGridItem(
                     icon: Icons.event_note_rounded,
                     label: 'Event Planning',
-                    onTap: () => Navigator.pushNamed(context, AppRouter.eventPlanning),
+                    onTap: () =>
+                        Navigator.pushNamed(context, AppRouter.eventPlanning),
                   ),
                   ServiceGridItem(
                     icon: Icons.location_city_rounded,
                     label: 'Venue Booking',
-                    onTap: () => Navigator.pushNamed(context, AppRouter.serviceList, arguments: 'Venue Booking'),
+                    onTap: () => Navigator.pushNamed(
+                        context, AppRouter.serviceList,
+                        arguments: 'Venue Booking'),
                   ),
                   ServiceGridItem(
                     icon: Icons.people_rounded,
                     label: 'Staff Hiring',
-                    onTap: () => Navigator.pushNamed(context, AppRouter.serviceList, arguments: 'Staff Hiring'),
+                    onTap: () => Navigator.pushNamed(
+                        context, AppRouter.serviceList,
+                        arguments: 'Staff Hiring'),
                   ),
                   ServiceGridItem(
                     icon: Icons.security_rounded,
                     label: 'Security Services',
-                    onTap: () => Navigator.pushNamed(context, AppRouter.serviceList, arguments: 'Security'),
+                    onTap: () => Navigator.pushNamed(
+                        context, AppRouter.serviceList,
+                        arguments: 'Security'),
                   ),
                   ServiceGridItem(
                     icon: Icons.room_service_rounded,
                     label: 'Reception',
-                    onTap: () => Navigator.pushNamed(context, AppRouter.serviceList, arguments: 'Reception'),
+                    onTap: () => Navigator.pushNamed(
+                        context, AppRouter.serviceList,
+                        arguments: 'Reception'),
                   ),
                   ServiceGridItem(
                     icon: Icons.more_horiz_rounded,
                     label: 'More',
-                    onTap: () => Navigator.pushNamed(context, AppRouter.serviceList, arguments: 'All Services'),
+                    onTap: () => Navigator.pushNamed(
+                        context, AppRouter.serviceList,
+                        arguments: 'All Services'),
                   ),
                 ],
               ),
@@ -91,8 +106,12 @@ class HomePage extends StatelessWidget {
                 children: [
                   Text('Popular Services', style: AppTypography.headlineMD),
                   TextButton(
-                    onPressed: () => Navigator.pushNamed(context, AppRouter.serviceList, arguments: 'Popular'),
-                    child: Text('See All', style: AppTypography.labelMD.copyWith(color: AppColors.primary)),
+                    onPressed: () => Navigator.pushNamed(
+                        context, AppRouter.serviceList,
+                        arguments: 'Popular'),
+                    child: Text('See All',
+                        style: AppTypography.labelMD
+                            .copyWith(color: AppColors.primary)),
                   ),
                 ],
               ),
@@ -102,16 +121,22 @@ class HomePage extends StatelessWidget {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: popularServices.length,
-                  separatorBuilder: (context, index) => const SizedBox(width: 16),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 16),
                   itemBuilder: (context, index) {
+                    final service = popularServices[index];
                     return SizedBox(
                       width: 240,
                       child: ServiceCard(
-                        service: popularServices[index],
+                        imageUrl: service.imageUrl,
+                        name: service.name,
+                        category: service.category.name,
+                        rating: service.rating,
+                        price: service.price,
                         onTap: () => Navigator.pushNamed(
                           context,
                           AppRouter.serviceDetail,
-                          arguments: popularServices[index].id,
+                          arguments: service.id,
                         ),
                       ),
                     );

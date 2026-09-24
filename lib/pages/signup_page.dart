@@ -10,7 +10,7 @@ import 'package:eventora/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -59,10 +59,13 @@ class _SignupPageState extends State<SignupPage> {
                   obscureText: _obscurePassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: AppColors.mutedText,
                     ),
-                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    onPressed: () =>
+                        setState(() => _obscurePassword = !_obscurePassword),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -75,7 +78,8 @@ class _SignupPageState extends State<SignupPage> {
                       _obscureConfirm ? Icons.visibility_off : Icons.visibility,
                       color: AppColors.mutedText,
                     ),
-                    onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                    onPressed: () =>
+                        setState(() => _obscureConfirm = !_obscureConfirm),
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -85,9 +89,13 @@ class _SignupPageState extends State<SignupPage> {
                   isFullWidth: true,
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await authProvider.signup();
-                      if (mounted) {
-                        Navigator.pushNamedAndRemoveUntil(context, AppRouter.mainShell, (route) => false);
+                      final navigator = Navigator.of(context);
+                      final success = await authProvider.signup('John Doe',
+                          'user@example.com', 'password123', '+1234567890');
+                      if (!mounted) return;
+                      if (success) {
+                        navigator.pushNamedAndRemoveUntil(
+                            AppRouter.mainShell, (route) => false);
                       }
                     }
                   },
@@ -96,10 +104,14 @@ class _SignupPageState extends State<SignupPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Already have an account?", style: AppTypography.bodyMD),
+                    Text("Already have an account?",
+                        style: AppTypography.bodyMD),
                     TextButton(
-                      onPressed: () => Navigator.pushReplacementNamed(context, AppRouter.login),
-                      child: Text('Log In', style: AppTypography.labelLG.copyWith(color: AppColors.primary)),
+                      onPressed: () => Navigator.pushReplacementNamed(
+                          context, AppRouter.login),
+                      child: Text('Log In',
+                          style: AppTypography.labelLG
+                              .copyWith(color: AppColors.primary)),
                     ),
                   ],
                 ),

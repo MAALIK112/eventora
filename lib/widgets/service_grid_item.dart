@@ -9,11 +9,11 @@ class ServiceGridItem extends StatelessWidget {
   final VoidCallback? onTap;
 
   const ServiceGridItem({
-    Key? key,
+    super.key,
     required this.label,
     required this.icon,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

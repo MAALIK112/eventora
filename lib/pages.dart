@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 25),
           _sectionTitle(context, 'Why Eventora?', ''),
           const SizedBox(height: 13),
-          Row(children: const [
+          const Row(children: [
             Expanded(
                 child: _Benefit(
                     icon: Icons.verified_rounded,
@@ -470,14 +470,14 @@ class ProfilePage extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.w800, color: EventoraStyles.ink)),
             const SizedBox(height: 9),
-            _ProfileItem(
+            const _ProfileItem(
                 icon: Icons.person_outline_rounded,
                 title: 'Personal information'),
-            _ProfileItem(
+            const _ProfileItem(
                 icon: Icons.notifications_none_rounded, title: 'Notifications'),
-            _ProfileItem(
+            const _ProfileItem(
                 icon: Icons.help_outline_rounded, title: 'Help & support'),
-            _ProfileItem(icon: Icons.settings_outlined, title: 'Settings'),
+            const _ProfileItem(icon: Icons.settings_outlined, title: 'Settings'),
             const SizedBox(height: 18),
             TextButton.icon(
                 onPressed: () {},

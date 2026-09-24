@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class ServiceListingPage extends StatelessWidget {
   final String category;
 
-  const ServiceListingPage({Key? key, required this.category}) : super(key: key);
+  const ServiceListingPage({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,17 @@ class ServiceListingPage extends StatelessWidget {
               ),
               itemCount: services.length,
               itemBuilder: (context, index) {
+                final service = services[index];
                 return ServiceCard(
-                  service: services[index],
+                  imageUrl: service.imageUrl,
+                  name: service.name,
+                  category: service.category.name,
+                  rating: service.rating,
+                  price: service.price,
                   onTap: () => Navigator.pushNamed(
                     context,
                     AppRouter.serviceDetail,
-                    arguments: services[index].id,
+                    arguments: service.id,
                   ),
                 );
               },

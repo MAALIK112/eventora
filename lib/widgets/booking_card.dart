@@ -18,7 +18,7 @@ class BookingCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   const BookingCard({
-    Key? key,
+    super.key,
     required this.serviceName,
     required this.serviceImageUrl,
     required this.bookingDate,
@@ -26,7 +26,7 @@ class BookingCard extends StatelessWidget {
     required this.total,
     required this.bookingId,
     this.onTap,
-  }) : super(key: key);
+  });
 
   StatusType _mapStatus(BookingStatus s) {
     switch (s) {

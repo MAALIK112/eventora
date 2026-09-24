@@ -5,7 +5,7 @@ import 'package:eventora/styles/app_spacing.dart';
 
 class SkeletonBase extends StatelessWidget {
   final Widget child;
-  const SkeletonBase({Key? key, required this.child}) : super(key: key);
+  const SkeletonBase({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SkeletonBase extends StatelessWidget {
 }
 
 class ServiceCardSkeleton extends StatelessWidget {
-  const ServiceCardSkeleton({Key? key}) : super(key: key);
+  const ServiceCardSkeleton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class ServiceCardSkeleton extends StatelessWidget {
 }
 
 class BookingCardSkeleton extends StatelessWidget {
-  const BookingCardSkeleton({Key? key}) : super(key: key);
+  const BookingCardSkeleton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +107,7 @@ class BookingCardSkeleton extends StatelessWidget {
 
 class ListSkeleton extends StatelessWidget {
   final int count;
-  const ListSkeleton({Key? key, this.count = 3}) : super(key: key);
+  const ListSkeleton({super.key, this.count = 3});
 
   @override
   Widget build(BuildContext context) {

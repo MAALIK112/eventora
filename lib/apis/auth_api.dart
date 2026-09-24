@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'package:eventora/apis/dio_client.dart';
 
 class AuthApi {
-  final DioClient _dioClient = DioClient();
-
   Future<Map<String, dynamic>> login(String email, String password) async {
     await Future.delayed(const Duration(seconds: 1));
     return {
@@ -17,7 +14,8 @@ class AuthApi {
     };
   }
 
-  Future<Map<String, dynamic>> signup(String name, String email, String password, String phone) async {
+  Future<Map<String, dynamic>> signup(
+      String name, String email, String password, String phone) async {
     await Future.delayed(const Duration(seconds: 1));
     return {
       'user': {

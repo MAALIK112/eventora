@@ -10,20 +10,20 @@ class PaymentMethodTile extends StatelessWidget {
   final VoidCallback? onTap;
 
   const PaymentMethodTile({
-    Key? key,
+    super.key,
     required this.name,
     required this.icon,
     this.isSelected = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
-          bottom: const BorderSide(color: AppColors.subtleDivider, width: 1),
+          bottom: BorderSide(color: AppColors.subtleDivider, width: 1),
         ),
       ),
       child: Material(

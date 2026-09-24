@@ -7,7 +7,7 @@ import 'package:eventora/widgets/eventora_button.dart';
 import 'package:eventora/widgets/eventora_text_field.dart';
 
 class SupportPage extends StatelessWidget {
-  const SupportPage({Key? key}) : super(key: key);
+  const SupportPage({super.key});
 
   @override
   Widget build(BuildContext context) {

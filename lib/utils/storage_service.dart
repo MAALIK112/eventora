@@ -3,20 +3,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 class StorageService {
   static final StorageService _instance = StorageService._internal();
 
-  factory StorageService() {
-    return _instance;
-  }
+  factory StorageService() => _instance;
 
   StorageService._internal();
 
   SharedPreferences? _prefs;
 
   Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+    _prefs ??= await SharedPreferences.getInstance();
+  }
+
+  Future<SharedPreferences> get _instancePrefs async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs!;
   }
 
   Future<void> setToken(String token) async {
-    await _prefs?.setString('auth_token', token);
+    final prefs = await _instancePrefs;
+    await prefs.setString('auth_token', token);
   }
 
   String? getToken() {
@@ -24,7 +28,8 @@ class StorageService {
   }
 
   Future<void> setUserId(String id) async {
-    await _prefs?.setString('user_id', id);
+    final prefs = await _instancePrefs;
+    await prefs.setString('user_id', id);
   }
 
   String? getUserId() {
@@ -32,7 +37,8 @@ class StorageService {
   }
 
   Future<void> setBool(String key, bool value) async {
-    await _prefs?.setBool(key, value);
+    final prefs = await _instancePrefs;
+    await prefs.setBool(key, value);
   }
 
   bool? getBool(String key) {
@@ -40,6 +46,7 @@ class StorageService {
   }
 
   Future<void> clear() async {
-    await _prefs?.clear();
+    final prefs = await _instancePrefs;
+    await prefs.clear();
   }
 }

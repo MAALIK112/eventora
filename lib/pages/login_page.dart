@@ -10,7 +10,7 @@ import 'package:eventora/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -39,7 +39,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 8),
                 Text(
                   'Log in to continue planning your events.',
-                  style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText),
+                  style:
+                      AppTypography.bodyMD.copyWith(color: AppColors.mutedText),
                 ),
                 const SizedBox(height: 32),
                 const EventoraTextField(
@@ -57,7 +58,8 @@ class _LoginPageState extends State<LoginPage> {
                       _obscureText ? Icons.visibility_off : Icons.visibility,
                       color: AppColors.mutedText,
                     ),
-                    onPressed: () => setState(() => _obscureText = !_obscureText),
+                    onPressed: () =>
+                        setState(() => _obscureText = !_obscureText),
                   ),
                 ),
                 Align(
@@ -66,7 +68,8 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () {},
                     child: Text(
                       'Forgot Password?',
-                      style: AppTypography.labelMD.copyWith(color: AppColors.primary),
+                      style: AppTypography.labelMD
+                          .copyWith(color: AppColors.primary),
                     ),
                   ),
                 ),
@@ -77,9 +80,13 @@ class _LoginPageState extends State<LoginPage> {
                   isFullWidth: true,
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      await authProvider.login();
-                      if (mounted) {
-                        Navigator.pushNamedAndRemoveUntil(context, AppRouter.mainShell, (route) => false);
+                      final navigator = Navigator.of(context);
+                      final success = await authProvider.login(
+                          'user@example.com', 'password123');
+                      if (!mounted) return;
+                      if (success) {
+                        navigator.pushNamedAndRemoveUntil(
+                            AppRouter.mainShell, (route) => false);
                       }
                     }
                   },
@@ -90,8 +97,11 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text("Don't have an account?", style: AppTypography.bodyMD),
                     TextButton(
-                      onPressed: () => Navigator.pushReplacementNamed(context, AppRouter.signup),
-                      child: Text('Sign Up', style: AppTypography.labelLG.copyWith(color: AppColors.primary)),
+                      onPressed: () => Navigator.pushReplacementNamed(
+                          context, AppRouter.signup),
+                      child: Text('Sign Up',
+                          style: AppTypography.labelLG
+                              .copyWith(color: AppColors.primary)),
                     ),
                   ],
                 ),

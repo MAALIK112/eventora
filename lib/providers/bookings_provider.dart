@@ -5,7 +5,7 @@ import 'package:eventora/providers/auth_provider.dart';
 
 class BookingsProvider extends ChangeNotifier {
   final BookingsApi _bookingsApi = BookingsApi();
-  
+
   List<Booking> _bookings = [];
   Booking? _selectedBooking;
   ViewState _state = ViewState.idle;
@@ -13,10 +13,26 @@ class BookingsProvider extends ChangeNotifier {
   List<Booking> get bookings => _bookings;
   Booking? get selectedBooking => _selectedBooking;
   ViewState get state => _state;
+  bool get isLoading => _state == ViewState.loading;
 
-  List<Booking> get upcomingBookings => _bookings.where((b) => b.status.name == 'upcoming').toList();
-  List<Booking> get pastBookings => _bookings.where((b) => b.status.name == 'completed').toList();
-  List<Booking> get cancelledBookings => _bookings.where((b) => b.status.name == 'cancelled').toList();
+  List<Booking> get upcomingBookings =>
+      _bookings.where((b) => b.status.name == 'upcoming').toList();
+  List<Booking> get pastBookings =>
+      _bookings.where((b) => b.status.name == 'completed').toList();
+  List<Booking> get cancelledBookings =>
+      _bookings.where((b) => b.status.name == 'cancelled').toList();
+
+  List<Booking> getBookingsByStatus(String status) {
+    return _bookings.where((booking) => booking.status.name == status).toList();
+  }
+
+  Booking? getBookingById(String id) {
+    try {
+      return _bookings.firstWhere((booking) => booking.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
 
   Future<void> loadBookings({String? status}) async {
     _state = ViewState.loading;

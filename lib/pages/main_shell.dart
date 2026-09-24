@@ -3,12 +3,12 @@ import 'package:eventora/pages/home_page.dart';
 import 'package:eventora/pages/my_bookings_page.dart';
 import 'package:eventora/pages/wallet_page.dart';
 import 'package:eventora/pages/profile_page.dart';
-import 'package:eventora/widgets/eventora_bottom_nav.dart';
 import 'package:eventora/providers/navigation_provider.dart';
+import 'package:eventora/widgets/bottom_navigation.dart';
 import 'package:provider/provider.dart';
 
 class MainShell extends StatelessWidget {
-  const MainShell({Key? key}) : super(key: key);
+  const MainShell({super.key});
 
   @override
   Widget build(BuildContext context) {

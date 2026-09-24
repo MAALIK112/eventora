@@ -4,7 +4,7 @@ import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/widgets/custom_app_bar.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -27,19 +27,19 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text('Push Notifications', style: AppTypography.bodyLG),
             value: notificationsEnabled,
             onChanged: (val) => setState(() => notificationsEnabled = val),
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
           SwitchListTile(
             title: Text('Dark Mode', style: AppTypography.bodyLG),
             value: darkModeEnabled,
             onChanged: (val) => setState(() => darkModeEnabled = val),
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
           SwitchListTile(
             title: Text('Location Services', style: AppTypography.bodyLG),
             value: locationEnabled,
             onChanged: (val) => setState(() => locationEnabled = val),
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
           const Divider(),
           _buildSectionHeader('General'),

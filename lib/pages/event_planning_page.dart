@@ -6,7 +6,7 @@ import 'package:eventora/widgets/eventora_button.dart';
 import 'package:eventora/routes/app_router.dart';
 
 class EventPlanningPage extends StatelessWidget {
-  const EventPlanningPage({Key? key}) : super(key: key);
+  const EventPlanningPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class EventPlanningPage extends StatelessWidget {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Colors.transparent, AppColors.deepOnyx.withOpacity(0.8)],
+                        colors: [Colors.transparent, AppColors.deepOnyx.withValues(alpha: 0.8)],
                       ),
                     ),
                   ),

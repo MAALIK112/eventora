@@ -14,14 +14,14 @@ class ServiceCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   const ServiceCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.name,
     required this.category,
     required this.rating,
     required this.price,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

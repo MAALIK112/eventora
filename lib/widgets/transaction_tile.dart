@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:eventora/models/transaction_model.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
-
-enum TransactionType { credit, debit }
 
 class TransactionTile extends StatelessWidget {
   final String description;
@@ -11,12 +10,12 @@ class TransactionTile extends StatelessWidget {
   final DateTime date;
 
   const TransactionTile({
-    Key? key,
+    super.key,
     required this.description,
     required this.amount,
     required this.type,
     required this.date,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,8 @@ class TransactionTile extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: isCredit ? AppColors.emeraldTintBg : AppColors.errorContainer,
+            backgroundColor:
+                isCredit ? AppColors.emeraldTintBg : AppColors.errorContainer,
             child: Icon(
               isCredit ? Icons.arrow_upward : Icons.arrow_downward,
               color: isCredit ? AppColors.successGreen : AppColors.error,
@@ -46,7 +46,8 @@ class TransactionTile extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   '${date.day}/${date.month}/${date.year}',
-                  style: AppTypography.bodySM.copyWith(color: AppColors.mutedText),
+                  style:
+                      AppTypography.bodySM.copyWith(color: AppColors.mutedText),
                 ),
               ],
             ),

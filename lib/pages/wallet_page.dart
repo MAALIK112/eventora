@@ -8,7 +8,7 @@ import 'package:eventora/providers/wallet_provider.dart';
 import 'package:provider/provider.dart';
 
 class WalletPage extends StatelessWidget {
-  const WalletPage({Key? key}) : super(key: key);
+  const WalletPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +37,28 @@ class WalletPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Available Balance', style: AppTypography.bodySM.copyWith(color: Colors.white70)),
+                    Text('Available Balance',
+                        style: AppTypography.bodySM
+                            .copyWith(color: Colors.white70)),
                     const SizedBox(height: 8),
                     Text(
                       '\$${walletProvider.balance.toStringAsFixed(2)}',
-                      style: AppTypography.headlineXLMobile.copyWith(color: Colors.white),
+                      style: AppTypography.headlineXLMobile
+                          .copyWith(color: Colors.white),
                     ),
                     const SizedBox(height: 24),
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () => Navigator.pushNamed(context, AppRouter.addFunds),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AppRouter.addFunds),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.amberAccent,
                           foregroundColor: AppColors.deepOnyx,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(9999)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 12),
                           elevation: 0,
                         ),
                         child: Text('Add Funds', style: AppTypography.labelMD),
@@ -63,17 +69,28 @@ class WalletPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.marginMobile),
-              child: Text('Transaction History', style: AppTypography.headlineSM),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.marginMobile),
+              child:
+                  Text('Transaction History', style: AppTypography.headlineSM),
             ),
             const SizedBox(height: 16),
             Expanded(
               child: walletProvider.transactions.isEmpty
-                  ? Center(child: Text('No transactions yet', style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText)))
+                  ? Center(
+                      child: Text('No transactions yet',
+                          style: AppTypography.bodyMD
+                              .copyWith(color: AppColors.mutedText)))
                   : ListView.builder(
                       itemCount: walletProvider.transactions.length,
                       itemBuilder: (context, index) {
-                        return TransactionTile(transaction: walletProvider.transactions[index]);
+                        final transaction = walletProvider.transactions[index];
+                        return TransactionTile(
+                          description: transaction.description,
+                          amount: transaction.amount,
+                          type: transaction.type,
+                          date: transaction.date,
+                        );
                       },
                     ),
             ),

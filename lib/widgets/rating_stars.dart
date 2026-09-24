@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
-import 'package:eventora/styles/app_typography.dart';
 
 class RatingStars extends StatelessWidget {
   final double rating;
@@ -10,13 +9,13 @@ class RatingStars extends StatelessWidget {
   final ValueChanged<double>? onRatingChanged;
 
   const RatingStars({
-    Key? key,
+    super.key,
     required this.rating,
     this.size = 16,
     this.color = AppColors.luminousCaramel,
     this.interactive = false,
     this.onRatingChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class RatingStars extends StatelessWidget {
         } else {
           iconData = Icons.star_outline_rounded;
         }
-        
+
         Widget star = Icon(
           iconData,
           size: size,

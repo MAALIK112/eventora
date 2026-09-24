@@ -9,12 +9,12 @@ class EventoraSearchBar extends StatefulWidget {
   final VoidCallback? onTap;
 
   const EventoraSearchBar({
-    Key? key,
+    super.key,
     this.controller,
     this.hint = 'Search services...',
     this.onChanged,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<EventoraSearchBar> createState() => _EventoraSearchBarState();

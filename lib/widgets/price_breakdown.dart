@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
-import 'package:eventora/styles/app_spacing.dart';
 
 class PriceItem {
   final String name;
@@ -15,11 +14,11 @@ class PriceBreakdown extends StatelessWidget {
   final double total;
 
   const PriceBreakdown({
-    Key? key,
+    super.key,
     required this.items,
     this.tax,
     required this.total,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,8 @@ class PriceBreakdown extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(item.name, style: AppTypography.bodyMD),
-                  Text('\$${item.price.toStringAsFixed(2)}', style: AppTypography.bodyMD),
+                  Text('\$${item.price.toStringAsFixed(2)}',
+                      style: AppTypography.bodyMD),
                 ],
               ),
             )),
@@ -45,7 +45,8 @@ class PriceBreakdown extends StatelessWidget {
               Text('\$${tax!.toStringAsFixed(2)}', style: AppTypography.bodyMD),
             ],
           ),
-          const Divider(color: AppColors.outlineVariant, thickness: 1.5, height: 24),
+          const Divider(
+              color: AppColors.outlineVariant, thickness: 1.5, height: 24),
         ],
         Container(
           padding: const EdgeInsets.all(16.0),
@@ -62,7 +63,8 @@ class PriceBreakdown extends StatelessWidget {
               ),
               Text(
                 '\$${total.toStringAsFixed(2)}',
-                style: AppTypography.headlineMD.copyWith(color: AppColors.primary),
+                style:
+                    AppTypography.headlineMD.copyWith(color: AppColors.primary),
               ),
             ],
           ),

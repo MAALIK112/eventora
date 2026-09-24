@@ -6,7 +6,7 @@ import 'package:eventora/widgets/eventora_text_field.dart';
 import 'package:eventora/widgets/eventora_button.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key}) : super(key: key);
+  const EditProfilePage({super.key});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();

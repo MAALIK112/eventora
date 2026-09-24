@@ -7,7 +7,7 @@ import 'package:eventora/widgets/payment_method_tile.dart';
 import 'package:eventora/widgets/eventora_button.dart';
 
 class AddFundsPage extends StatefulWidget {
-  const AddFundsPage({Key? key}) : super(key: key);
+  const AddFundsPage({super.key});
 
   @override
   State<AddFundsPage> createState() => _AddFundsPageState();
@@ -40,7 +40,8 @@ class _AddFundsPageState extends State<AddFundsPage> {
             const SizedBox(height: 24),
             TextField(
               controller: _amountController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               textAlign: TextAlign.center,
               style: AppTypography.headlineXLMobile,
               decoration: InputDecoration(
@@ -67,14 +68,14 @@ class _AddFundsPageState extends State<AddFundsPage> {
             ),
             const SizedBox(height: 16),
             PaymentMethodTile(
+              name: 'Credit/Debit Card',
               icon: Icons.credit_card,
-              title: 'Credit/Debit Card',
               isSelected: selectedPaymentMethod == 'Card',
               onTap: () => setState(() => selectedPaymentMethod = 'Card'),
             ),
             PaymentMethodTile(
+              name: 'PayPal',
               icon: Icons.account_balance_wallet,
-              title: 'PayPal',
               isSelected: selectedPaymentMethod == 'PayPal',
               onTap: () => setState(() => selectedPaymentMethod = 'PayPal'),
             ),
@@ -101,7 +102,7 @@ class _AddFundsPageState extends State<AddFundsPage> {
     return ActionChip(
       label: Text('\$$amount'),
       labelStyle: AppTypography.labelMD.copyWith(color: AppColors.primary),
-      backgroundColor: AppColors.primary.withOpacity(0.1),
+      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       side: BorderSide.none,
       onPressed: () => _setAmount(amount),

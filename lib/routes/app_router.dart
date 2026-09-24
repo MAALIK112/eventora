@@ -40,8 +40,8 @@ class AppRouter {
   static const String settings = '/settings';
   static const String support = '/support';
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
+  static Route<dynamic> generateRoute(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashPage());
       case login:
@@ -53,15 +53,18 @@ class AppRouter {
       case mainShell:
         return MaterialPageRoute(builder: (_) => const MainShell());
       case serviceList:
-        final args = settings.arguments as String?;
-        return MaterialPageRoute(builder: (_) => ServiceListingPage(category: args ?? 'Services'));
+        final args = routeSettings.arguments as String?;
+        return MaterialPageRoute(
+            builder: (_) => ServiceListingPage(category: args ?? 'Services'));
       case serviceDetail:
-        final args = settings.arguments as String?;
-        return MaterialPageRoute(builder: (_) => ServiceDetailPage(serviceId: args ?? ''));
+        final args = routeSettings.arguments as String?;
+        return MaterialPageRoute(
+            builder: (_) => ServiceDetailPage(serviceId: args ?? ''));
       case eventPlanning:
         return MaterialPageRoute(builder: (_) => const EventPlanningPage());
       case bookingConfirmation:
-        return MaterialPageRoute(builder: (_) => const BookingConfirmationPage());
+        return MaterialPageRoute(
+            builder: (_) => const BookingConfirmationPage());
       case payment:
         return MaterialPageRoute(builder: (_) => const PaymentPage());
       case orderConfirmation:
@@ -69,8 +72,9 @@ class AppRouter {
       case myBookings:
         return MaterialPageRoute(builder: (_) => const MyBookingsPage());
       case bookingDetail:
-        final args = settings.arguments as String?;
-        return MaterialPageRoute(builder: (_) => BookingDetailPage(bookingId: args ?? ''));
+        final args = routeSettings.arguments as String?;
+        return MaterialPageRoute(
+            builder: (_) => BookingDetailPage(bookingId: args ?? ''));
       case wallet:
         return MaterialPageRoute(builder: (_) => const WalletPage());
       case addFunds:
@@ -86,7 +90,8 @@ class AppRouter {
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
+            body: Center(
+                child: Text('No route defined for ${routeSettings.name}')),
           ),
         );
     }

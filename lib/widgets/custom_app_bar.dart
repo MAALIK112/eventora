@@ -9,12 +9,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onBack;
 
   const CustomAppBar({
-    Key? key,
+    super.key,
     required this.title,
     this.showBack = true,
     this.trailing,
     this.onBack,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

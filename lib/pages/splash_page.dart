@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
-import 'package:eventora/widgets/eventora_button.dart';
+import 'package:eventora/widgets/custom_button.dart';
 import 'package:eventora/routes/app_router.dart';
 
 class SplashPage extends StatelessWidget {
@@ -35,23 +35,27 @@ class SplashPage extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 'Eventora',
-                style: AppTypography.headlineXLMobile.copyWith(color: AppColors.deepOnyx),
+                style: AppTypography.headlineXLMobile
+                    .copyWith(color: AppColors.deepOnyx),
               ),
               const SizedBox(height: 8),
               Text(
                 'Plan • Book • Manage • Enjoy',
-                style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText),
+                style:
+                    AppTypography.bodyMD.copyWith(color: AppColors.mutedText),
               ),
               const Spacer(),
               EventoraButton(
                 text: 'Get Started',
-                onPressed: () => Navigator.pushNamed(context, AppRouter.signup),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, AppRouter.signup),
                 isFullWidth: true,
               ),
               const SizedBox(height: 16),
               EventoraButton(
                 text: 'Log In',
-                onPressed: () => Navigator.pushNamed(context, AppRouter.login),
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, AppRouter.login),
                 isFullWidth: true,
                 isOutlined: true,
               ),

@@ -4,7 +4,7 @@ import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
 import 'package:eventora/widgets/custom_app_bar.dart';
 import 'package:eventora/widgets/payment_method_tile.dart';
-import 'package:eventora/widgets/eventora_button.dart';
+import 'package:eventora/widgets/custom_button.dart';
 
 class AddFundsPage extends StatefulWidget {
   const AddFundsPage({super.key});

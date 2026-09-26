@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
-import 'package:eventora/widgets/eventora_button.dart';
-import 'package:eventora/widgets/eventora_text_field.dart';
+import 'package:eventora/widgets/custom_button.dart';
+import 'package:eventora/widgets/custom_text_field.dart';
 import 'package:eventora/widgets/custom_app_bar.dart';
 import 'package:eventora/routes/app_router.dart';
 import 'package:eventora/providers/auth_provider.dart';
@@ -18,8 +18,23 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController(text: 'Admin User');
+  final _emailController = TextEditingController(text: 'admin@eventora.com');
+  final _phoneController = TextEditingController(text: '+1234567890');
+  final _passwordController = TextEditingController(text: 'admin123');
+  final _confirmPasswordController = TextEditingController(text: 'admin123');
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,27 +51,58 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const EventoraTextField(
+                EventoraTextField(
+                  controller: _nameController,
                   label: 'Full Name',
                   hint: 'John Doe',
-                ),
-                const SizedBox(height: 16),
-                const EventoraTextField(
-                  label: 'Email',
-                  hint: 'john@example.com',
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 16),
-                const EventoraTextField(
-                  label: 'Phone',
-                  hint: '+1 234 567 8900',
-                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Name is required';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 EventoraTextField(
+                  controller: _emailController,
+                  label: 'Email',
+                  hint: 'john@example.com',
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Email is required';
+                    }
+                    if (!value.contains('@')) {
+                      return 'Enter a valid email';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                EventoraTextField(
+                  controller: _phoneController,
+                  label: 'Phone',
+                  hint: '+1 234 567 8900',
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Phone is required';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                EventoraTextField(
+                  controller: _passwordController,
                   label: 'Password',
                   hint: 'Create a password',
                   obscureText: _obscurePassword,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password is required';
+                    }
+                    return null;
+                  },
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscurePassword
@@ -70,9 +116,19 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 const SizedBox(height: 16),
                 EventoraTextField(
+                  controller: _confirmPasswordController,
                   label: 'Confirm Password',
                   hint: 'Repeat your password',
                   obscureText: _obscureConfirm,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please confirm your password';
+                    }
+                    if (value != _passwordController.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscureConfirm ? Icons.visibility_off : Icons.visibility,
@@ -90,12 +146,27 @@ class _SignupPageState extends State<SignupPage> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       final navigator = Navigator.of(context);
-                      final success = await authProvider.signup('John Doe',
-                          'user@example.com', 'password123', '+1234567890');
+                      final messenger = ScaffoldMessenger.maybeOf(context);
+                      final success = await authProvider.signup(
+                        _nameController.text.trim(),
+                        _emailController.text.trim(),
+                        _passwordController.text.trim(),
+                        _phoneController.text.trim(),
+                      );
                       if (!mounted) return;
                       if (success) {
                         navigator.pushNamedAndRemoveUntil(
                             AppRouter.mainShell, (route) => false);
+                      } else {
+                        messenger?.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              authProvider.errorMessage ??
+                                  'Account creation failed. Please try again.',
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
                       }
                     }
                   },

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
-import 'package:eventora/widgets/eventora_button.dart';
+import 'package:eventora/widgets/custom_button.dart';
 import 'package:eventora/routes/app_router.dart';
 import 'package:eventora/providers/auth_provider.dart';
-import 'package:eventora/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -13,8 +12,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = context.watch<UserProvider>();
-    final user = userProvider.currentUser;
+    final authProvider = context.watch<AuthProvider>();
+    final user = authProvider.currentUser;
 
     return Scaffold(
       backgroundColor: AppColors.canvasBase,
@@ -31,17 +30,21 @@ class ProfilePage extends StatelessWidget {
             const CircleAvatar(
               radius: 40,
               backgroundColor: AppColors.primary,
-              child: Icon(Icons.person, size: 40, color: AppColors.surfaceContainerLowest),
+              child: Icon(Icons.person,
+                  size: 40, color: AppColors.surfaceContainerLowest),
             ),
             const SizedBox(height: 16),
             Text(user?.name ?? 'User Name', style: AppTypography.headlineLG),
             const SizedBox(height: 4),
-            Text(user?.email ?? 'user@example.com', style: AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
+            Text(user?.email ?? 'user@example.com',
+                style:
+                    AppTypography.bodyMD.copyWith(color: AppColors.mutedText)),
             const SizedBox(height: 24),
             EventoraButton(
               text: 'Edit Profile',
               isOutlined: true,
-              onPressed: () => Navigator.pushNamed(context, AppRouter.editProfile),
+              onPressed: () =>
+                  Navigator.pushNamed(context, AppRouter.editProfile),
             ),
             const SizedBox(height: 32),
             _buildMenuTile(
@@ -70,9 +73,10 @@ class ProfilePage extends StatelessWidget {
               isFullWidth: true,
               isOutlined: true,
               onPressed: () async {
-                await context.read<AuthProvider>().logout();
+                await authProvider.logout();
                 if (context.mounted) {
-                  Navigator.pushNamedAndRemoveUntil(context, AppRouter.splash, (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, AppRouter.splash, (route) => false);
                 }
               },
             ),
@@ -82,7 +86,10 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuTile({required IconData icon, required String title, required VoidCallback onTap}) {
+  Widget _buildMenuTile(
+      {required IconData icon,
+      required String title,
+      required VoidCallback onTap}) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Container(
@@ -94,7 +101,8 @@ class ProfilePage extends StatelessWidget {
         child: Icon(icon, color: AppColors.primary),
       ),
       title: Text(title, style: AppTypography.labelLG),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.mutedText),
+      trailing: const Icon(Icons.arrow_forward_ios,
+          size: 16, color: AppColors.mutedText),
       onTap: onTap,
     );
   }

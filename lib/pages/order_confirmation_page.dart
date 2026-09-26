@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
-import 'package:eventora/widgets/eventora_button.dart';
+import 'package:eventora/widgets/custom_button.dart';
 import 'package:eventora/routes/app_router.dart';
 
 class OrderConfirmationPage extends StatelessWidget {

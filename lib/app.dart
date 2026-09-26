@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:eventora/pages/login_page.dart';
 import 'package:eventora/providers/auth_provider.dart';
 import 'package:eventora/providers/bookings_provider.dart';
 import 'package:eventora/providers/navigation_provider.dart';
 import 'package:eventora/providers/services_provider.dart';
 import 'package:eventora/providers/wallet_provider.dart';
-import 'styles.dart';
+import 'package:eventora/routes/app_router.dart';
+import 'package:eventora/styles/app_theme.dart';
 
 class EventoraApp extends StatelessWidget {
   const EventoraApp({super.key});
@@ -24,8 +24,9 @@ class EventoraApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Eventora',
         debugShowCheckedModeBanner: false,
-        theme: EventoraStyles.theme,
-        home: const LoginPage(),
+        theme: AppTheme.lightTheme,
+        initialRoute: AppRouter.splash,
+        onGenerateRoute: AppRouter.generateRoute,
       ),
     );
   }

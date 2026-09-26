@@ -47,10 +47,11 @@ class UserModel {
       name: json['name'] as String,
       email: json['email'] as String,
       phone: json['phone'] as String,
-      profileImageUrl: json['profileImageUrl'] as String,
+      profileImageUrl: json['profileImageUrl'] as String? ?? '',
       savedAddresses: List<String>.from(json['savedAddresses'] ?? []),
       favoriteServiceIds: List<String>.from(json['favoriteServiceIds'] ?? []),
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      createdAt: DateTime.tryParse(json['createdAt'] as String? ?? '') ??
+          DateTime.now(),
     );
   }
 

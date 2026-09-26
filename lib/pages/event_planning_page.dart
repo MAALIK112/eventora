@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
-import 'package:eventora/widgets/eventora_button.dart';
+import 'package:eventora/widgets/custom_button.dart';
 import 'package:eventora/routes/app_router.dart';
 
 class EventPlanningPage extends StatelessWidget {
@@ -18,7 +18,9 @@ class EventPlanningPage extends StatelessWidget {
             expandedHeight: 220,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Event Planning & Management', style: AppTypography.headlineMD.copyWith(color: Colors.white)),
+              title: Text('Event Planning & Management',
+                  style:
+                      AppTypography.headlineMD.copyWith(color: Colors.white)),
               background: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -28,7 +30,10 @@ class EventPlanningPage extends StatelessWidget {
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Colors.transparent, AppColors.deepOnyx.withValues(alpha: 0.8)],
+                        colors: [
+                          Colors.transparent,
+                          AppColors.deepOnyx.withValues(alpha: 0.8)
+                        ],
                       ),
                     ),
                   ),
@@ -45,11 +50,14 @@ class EventPlanningPage extends StatelessWidget {
                   style: AppTypography.bodyMD,
                 ),
                 const SizedBox(height: 24),
-                _buildCategoryTile(context, Icons.event, 'Event Planning & Management'),
+                _buildCategoryTile(
+                    context, Icons.event, 'Event Planning & Management'),
                 _buildCategoryTile(context, Icons.business, 'Corporate Events'),
                 _buildCategoryTile(context, Icons.favorite, 'Weddings'),
-                _buildCategoryTile(context, Icons.celebration, 'Private Parties'),
-                _buildCategoryTile(context, Icons.mic, 'Conferences & Exhibitions'),
+                _buildCategoryTile(
+                    context, Icons.celebration, 'Private Parties'),
+                _buildCategoryTile(
+                    context, Icons.mic, 'Conferences & Exhibitions'),
               ]),
             ),
           ),
@@ -73,7 +81,8 @@ class EventPlanningPage extends StatelessWidget {
       leading: Icon(icon, color: AppColors.primary),
       title: Text(title, style: AppTypography.labelLG),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () => Navigator.pushNamed(context, AppRouter.serviceList, arguments: title),
+      onTap: () =>
+          Navigator.pushNamed(context, AppRouter.serviceList, arguments: title),
     );
   }
 }

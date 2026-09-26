@@ -5,7 +5,7 @@ import 'package:eventora/styles/app_typography.dart';
 import 'package:eventora/styles/app_spacing.dart';
 import 'package:eventora/widgets/custom_app_bar.dart';
 import 'package:eventora/widgets/price_breakdown.dart';
-import 'package:eventora/widgets/eventora_button.dart';
+import 'package:eventora/widgets/custom_button.dart';
 import 'package:eventora/providers/bookings_provider.dart';
 import 'package:provider/provider.dart';
 

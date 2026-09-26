@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:eventora/styles/app_colors.dart';
 import 'package:eventora/styles/app_spacing.dart';
 import 'package:eventora/widgets/custom_app_bar.dart';
-import 'package:eventora/widgets/eventora_text_field.dart';
-import 'package:eventora/widgets/eventora_button.dart';
+import 'package:eventora/widgets/custom_text_field.dart';
+import 'package:eventora/widgets/custom_button.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -32,7 +32,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     const CircleAvatar(
                       radius: 50,
                       backgroundColor: AppColors.primary,
-                      child: Icon(Icons.person, size: 50, color: AppColors.surfaceContainerLowest),
+                      child: Icon(Icons.person,
+                          size: 50, color: AppColors.surfaceContainerLowest),
                     ),
                     Positioned(
                       bottom: 0,
@@ -43,7 +44,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           color: AppColors.amberAccent,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(Icons.camera_alt, color: AppColors.deepOnyx, size: 20),
+                        child: const Icon(Icons.camera_alt,
+                            color: AppColors.deepOnyx, size: 20),
                       ),
                     ),
                   ],

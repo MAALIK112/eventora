@@ -1,79 +1,100 @@
 import 'package:flutter/foundation.dart';
-import 'package:eventora/apis/user_api.dart';
-import 'package:eventora/models/user_model.dart';
-import 'package:eventora/models/service_model.dart';
-import 'package:eventora/providers/auth_provider.dart';
+import '../models/user_model.dart';
+import '../core/security/secure_storage_service.dart';
+import '../core/security/input_validator.dart';
 
 class UserProvider extends ChangeNotifier {
-  final UserApi _userApi = UserApi();
+  static const demoPassword = 'CelebrationMember2026!';
+  String _password = demoPassword;
 
-  User? _user;
-  List<String> _addresses = [];
-  List<Service> _favorites = [];
-  ViewState _state = ViewState.idle;
+  UserProfile _user = const UserProfile(
+    id: 'usr-90210',
+    fullName: 'Lady Genevieve Sinclair',
+    email: 'genevieve.sinclair@eventora.luxury',
+    phone: '+1 (310) 555-0198',
+    avatarUrl:
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    location: 'Beverly Hills, CA',
+    memberTier: 'Celebration Luxe Member',
+    eventsHosted: 6,
+    biometricsEnabled: true,
+    twoFactorEnabled: true,
+    emailNotifications: true,
+    pushNotifications: true,
+    preferredCurrency: 'USD',
+  );
 
-  User? get user => _user;
-  User? get currentUser => _user;
-  List<String> get addresses => _addresses;
-  List<Service> get favorites => _favorites;
-  ViewState get state => _state;
+  final SecureStorageService _secureStorage = SecureStorageService();
 
-  Future<void> loadProfile() async {
-    _state = ViewState.loading;
-    notifyListeners();
+  UserProfile get user => _user;
 
-    try {
-      final data = await _userApi.getProfile();
-      _user = User.fromJson(data);
-      _state = ViewState.success;
-    } catch (e) {
-      _state = ViewState.error;
-    }
-    notifyListeners();
+  bool authenticate({required String email, required String password}) {
+    return email.trim().toLowerCase() == _user.email.toLowerCase() &&
+        password == _password;
   }
 
-  Future<bool> updateProfile(User user) async {
-    _state = ViewState.loading;
-    notifyListeners();
-
-    try {
-      final data = await _userApi.updateProfile(user.toJson());
-      _user = User.fromJson(data);
-      _state = ViewState.success;
-      notifyListeners();
-      return true;
-    } catch (e) {
-      _state = ViewState.error;
-      notifyListeners();
+  bool signUp({
+    required String fullName,
+    required String email,
+    required String password,
+  }) {
+    final normalizedEmail = email.trim().toLowerCase();
+    if (normalizedEmail.isEmpty ||
+        InputValidator.validateEmail(normalizedEmail) != null ||
+        normalizedEmail == _user.email.toLowerCase() ||
+        fullName.trim().isEmpty ||
+        password.length < 8) {
       return false;
     }
+
+    _user = UserProfile(
+      id: 'usr-${DateTime.now().microsecondsSinceEpoch}',
+      fullName: fullName.trim(),
+      email: normalizedEmail,
+      phone: '',
+      avatarUrl: _user.avatarUrl,
+      location: '',
+      eventsHosted: 0,
+    );
+    _password = password;
+    notifyListeners();
+    return true;
   }
 
-  Future<void> loadAddresses() async {
-    try {
-      _addresses = await _userApi.getSavedAddresses();
-      notifyListeners();
-    } catch (e) {
-      // Handle silently
-    }
+  void updateProfile({
+    required String fullName,
+    required String email,
+    required String phone,
+    required String location,
+  }) {
+    _user = _user.copyWith(
+      fullName: fullName,
+      email: email,
+      phone: phone,
+      location: location,
+    );
+    notifyListeners();
   }
 
-  Future<void> loadFavorites() async {
-    try {
-      final data = await _userApi.getFavoriteServices();
-      _favorites = data.map((json) => Service.fromJson(json)).toList();
-      notifyListeners();
-    } catch (e) {
-      // Handle silently
-    }
+  void toggleBiometrics(bool enabled) {
+    _user = _user.copyWith(biometricsEnabled: enabled);
+    _secureStorage.setBiometricsEnabled(enabled);
+    notifyListeners();
   }
 
-  Future<void> toggleFavorite(String serviceId) async {
-    try {
-      await _userApi.toggleFavorite(serviceId);
-      await loadFavorites(); // Reload favorites to sync with backend
-    } catch (e) {
-      // Handle error
-    }
+  void toggleTwoFactor(bool enabled) {
+    _user = _user.copyWith(twoFactorEnabled: enabled);
+    _secureStorage.setTwoFactorEnabled(enabled);
+    notifyListeners();
+  }
+
+  void toggleEmailNotifications(bool enabled) {
+    _user = _user.copyWith(emailNotifications: enabled);
+    notifyListeners();
+  }
+
+  void togglePushNotifications(bool enabled) {
+    _user = _user.copyWith(pushNotifications: enabled);
+    notifyListeners();
   }
 }

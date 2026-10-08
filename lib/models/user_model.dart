@@ -1,72 +1,62 @@
-class UserModel {
+class UserProfile {
   final String id;
-  final String name;
+  final String fullName;
   final String email;
   final String phone;
-  final String profileImageUrl;
-  final List<String> savedAddresses;
-  final List<String> favoriteServiceIds;
-  final DateTime createdAt;
+  final String avatarUrl;
+  final String location;
+  final String memberTier; // 'Celebration Luxe Member'
+  final int eventsHosted;
+  final bool biometricsEnabled;
+  final bool twoFactorEnabled;
+  final bool emailNotifications;
+  final bool pushNotifications;
+  final String preferredCurrency;
 
-  const UserModel({
+  const UserProfile({
     required this.id,
-    required this.name,
+    required this.fullName,
     required this.email,
     required this.phone,
-    required this.profileImageUrl,
-    required this.savedAddresses,
-    required this.favoriteServiceIds,
-    required this.createdAt,
+    required this.avatarUrl,
+    required this.location,
+    this.memberTier = 'Celebration Luxe Member',
+    this.eventsHosted = 4,
+    this.biometricsEnabled = true,
+    this.twoFactorEnabled = false,
+    this.emailNotifications = true,
+    this.pushNotifications = true,
+    this.preferredCurrency = 'USD',
   });
 
-  UserModel copyWith({
-    String? id,
-    String? name,
+  UserProfile copyWith({
+    String? fullName,
     String? email,
     String? phone,
-    String? profileImageUrl,
-    List<String>? savedAddresses,
-    List<String>? favoriteServiceIds,
-    DateTime? createdAt,
+    String? avatarUrl,
+    String? location,
+    String? memberTier,
+    int? eventsHosted,
+    bool? biometricsEnabled,
+    bool? twoFactorEnabled,
+    bool? emailNotifications,
+    bool? pushNotifications,
+    String? preferredCurrency,
   }) {
-    return UserModel(
-      id: id ?? this.id,
-      name: name ?? this.name,
+    return UserProfile(
+      id: id,
+      fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       phone: phone ?? this.phone,
-      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
-      savedAddresses: savedAddresses ?? this.savedAddresses,
-      favoriteServiceIds: favoriteServiceIds ?? this.favoriteServiceIds,
-      createdAt: createdAt ?? this.createdAt,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
+      location: location ?? this.location,
+      memberTier: memberTier ?? this.memberTier,
+      eventsHosted: eventsHosted ?? this.eventsHosted,
+      biometricsEnabled: biometricsEnabled ?? this.biometricsEnabled,
+      twoFactorEnabled: twoFactorEnabled ?? this.twoFactorEnabled,
+      emailNotifications: emailNotifications ?? this.emailNotifications,
+      pushNotifications: pushNotifications ?? this.pushNotifications,
+      preferredCurrency: preferredCurrency ?? this.preferredCurrency,
     );
-  }
-
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      email: json['email'] as String,
-      phone: json['phone'] as String,
-      profileImageUrl: json['profileImageUrl'] as String? ?? '',
-      savedAddresses: List<String>.from(json['savedAddresses'] ?? []),
-      favoriteServiceIds: List<String>.from(json['favoriteServiceIds'] ?? []),
-      createdAt: DateTime.tryParse(json['createdAt'] as String? ?? '') ??
-          DateTime.now(),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'profileImageUrl': profileImageUrl,
-      'savedAddresses': savedAddresses,
-      'favoriteServiceIds': favoriteServiceIds,
-      'createdAt': createdAt.toIso8601String(),
-    };
   }
 }
-
-typedef User = UserModel;

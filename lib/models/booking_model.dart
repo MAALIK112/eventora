@@ -1,105 +1,143 @@
-enum BookingStatus { upcoming, confirmed, completed, cancelled }
+import 'service_model.dart';
 
-class BookingItem {
-  final String name;
-  final int quantity;
-  final double price;
+enum BookingStatus {
+  requested,
+  confirmed,
+  vendorAssigned,
+  inProgress,
+  completed,
+  cancelled,
+}
 
-  const BookingItem({
-    required this.name,
-    required this.quantity,
-    required this.price,
-  });
-
-  factory BookingItem.fromJson(Map<String, dynamic> json) {
-    return BookingItem(
-      name: json['name'] as String,
-      quantity: json['quantity'] as int,
-      price: (json['price'] as num).toDouble(),
-    );
+extension BookingStatusExtension on BookingStatus {
+  String get label {
+    switch (this) {
+      case BookingStatus.requested:
+        return 'Reservation Requested';
+      case BookingStatus.confirmed:
+        return 'Confirmed & Guaranteed';
+      case BookingStatus.vendorAssigned:
+        return 'Vendor Crew Assigned';
+      case BookingStatus.inProgress:
+        return 'Event in Progress';
+      case BookingStatus.completed:
+        return 'Completed';
+      case BookingStatus.cancelled:
+        return 'Cancelled';
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'quantity': quantity,
-      'price': price,
-    };
+  String get shortLabel {
+    switch (this) {
+      case BookingStatus.requested:
+        return 'Requested';
+      case BookingStatus.confirmed:
+        return 'Confirmed';
+      case BookingStatus.vendorAssigned:
+        return 'Assigned';
+      case BookingStatus.inProgress:
+        return 'In Progress';
+      case BookingStatus.completed:
+        return 'Completed';
+      case BookingStatus.cancelled:
+        return 'Cancelled';
+    }
   }
 }
 
-class BookingModel {
+class BookingTimelineEvent {
+  final String title;
+  final String time;
+  final String description;
+  final bool isCompleted;
+
+  const BookingTimelineEvent({
+    required this.title,
+    required this.time,
+    required this.description,
+    required this.isCompleted,
+  });
+}
+
+class Booking {
   final String id;
-  final String userId;
-  final String serviceId;
-  final String serviceName;
-  final String serviceImageUrl;
-  final DateTime bookingDate;
-  final DateTime createdAt;
+  final EventService service;
+  final ServicePackage selectedPackage;
+  final List<ServiceAddon> selectedAddons;
+  final DateTime eventDate;
+  final String eventTime;
+  final String eventLocation;
+  final String eventType;
+  final int guestCount;
+  final String specialRequests;
   final BookingStatus status;
-  final double subtotal;
+  final DateTime createdAt;
+  final double packagePrice;
+  final double addonsTotal;
+  final double serviceFee;
   final double tax;
-  final double total;
-  final List<BookingItem> items;
-  final String? paymentMethodId;
+  final double insuranceFee;
+  final double discount;
+  final double totalAmount;
+  final String paymentMethodTitle;
+  final String paymentTransactionId;
+  final bool isEscrowProtected;
+  final List<BookingTimelineEvent> timeline;
 
-  const BookingModel({
+  const Booking({
     required this.id,
-    required this.userId,
-    required this.serviceId,
-    required this.serviceName,
-    required this.serviceImageUrl,
-    required this.bookingDate,
-    required this.createdAt,
+    required this.service,
+    required this.selectedPackage,
+    required this.selectedAddons,
+    required this.eventDate,
+    required this.eventTime,
+    required this.eventLocation,
+    required this.eventType,
+    required this.guestCount,
+    required this.specialRequests,
     required this.status,
-    required this.subtotal,
+    required this.createdAt,
+    required this.packagePrice,
+    required this.addonsTotal,
+    required this.serviceFee,
     required this.tax,
-    required this.total,
-    required this.items,
-    this.paymentMethodId,
+    required this.insuranceFee,
+    required this.discount,
+    required this.totalAmount,
+    required this.paymentMethodTitle,
+    required this.paymentTransactionId,
+    this.isEscrowProtected = true,
+    required this.timeline,
   });
 
-  factory BookingModel.fromJson(Map<String, dynamic> json) {
-    return BookingModel(
-      id: json['id'] as String,
-      userId: json['userId'] as String,
-      serviceId: json['serviceId'] as String,
-      serviceName: json['serviceName'] as String,
-      serviceImageUrl: json['serviceImageUrl'] as String,
-      bookingDate: DateTime.parse(json['bookingDate'] as String),
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      status: BookingStatus.values.firstWhere(
-        (e) => e.name == json['status'],
-        orElse: () => BookingStatus.upcoming,
-      ),
-      subtotal: (json['subtotal'] as num).toDouble(),
-      tax: (json['tax'] as num).toDouble(),
-      total: (json['total'] as num).toDouble(),
-      items: (json['items'] as List<dynamic>?)
-              ?.map((item) => BookingItem.fromJson(item as Map<String, dynamic>))
-              .toList() ??
-          [],
-      paymentMethodId: json['paymentMethodId'] as String?,
+  Booking copyWith({
+    BookingStatus? status,
+    List<BookingTimelineEvent>? timeline,
+  }) {
+    return Booking(
+      id: id,
+      service: service,
+      selectedPackage: selectedPackage,
+      selectedAddons: selectedAddons,
+      eventDate: eventDate,
+      eventTime: eventTime,
+      eventLocation: eventLocation,
+      eventType: eventType,
+      guestCount: guestCount,
+      specialRequests: specialRequests,
+      status: status ?? this.status,
+      createdAt: createdAt,
+      packagePrice: packagePrice,
+      addonsTotal: addonsTotal,
+      serviceFee: serviceFee,
+      tax: tax,
+      insuranceFee: insuranceFee,
+      discount: discount,
+      totalAmount: totalAmount,
+      paymentMethodTitle: paymentMethodTitle,
+      paymentTransactionId: paymentTransactionId,
+      isEscrowProtected: isEscrowProtected,
+      timeline: timeline ?? this.timeline,
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'userId': userId,
-      'serviceId': serviceId,
-      'serviceName': serviceName,
-      'serviceImageUrl': serviceImageUrl,
-      'bookingDate': bookingDate.toIso8601String(),
-      'createdAt': createdAt.toIso8601String(),
-      'status': status.name,
-      'subtotal': subtotal,
-      'tax': tax,
-      'total': total,
-      'items': items.map((item) => item.toJson()).toList(),
-      'paymentMethodId': paymentMethodId,
-    };
-  }
 }
-
-typedef Booking = BookingModel;
